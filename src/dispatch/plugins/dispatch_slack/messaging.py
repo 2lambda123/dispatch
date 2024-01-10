@@ -183,11 +183,12 @@ def format_default_text(item: dict):
     """Creates the correct Slack text string based on the item context."""
     if item.get("title_link"):
         return f"*<{item['title_link']}|{item['title']}>*\n{item['text']}"
-    if item.get("datetime"):
+    elif item.get("datetime"):
         return f"*{item['title']}*\n <!date^{int(item['datetime'].timestamp())}^ {{date}} | {item['datetime']}"
-    if item.get("title"):
+    elif item.get("title"):
         return f"*{item['title']}*\n{item['text']}"
-    return item["text"]
+    else:
+        return item["text"]
 
 
 def default_notification(items: list):
