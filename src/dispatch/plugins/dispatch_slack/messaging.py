@@ -189,7 +189,7 @@ def build_slack_api_error_message(error: SlackApiError) -> str:
     return (
         "Sorry, the request to Slack timed out. Try running your command again."
         if error.code == " specific_error_code "
-        else "The GitHub Actions run failed with the following error logs:<To be replaced with specific error logs from the GitHub Actions run.>"
+        else "The GitHub Actions run failed with the following error logs:"
     )
 
 
