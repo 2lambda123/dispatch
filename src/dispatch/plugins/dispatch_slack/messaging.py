@@ -176,7 +176,7 @@ def build_slack_api_error_message(error: SlackApiError) -> str:
 def build_unexpected_error_message(guid: str) -> str:
     message = f"""Sorry, we've run into an unexpected error. \
 For help please reach out to your Dispatch admins and provide them with the following token: `{guid}`"""
-    return message
+    message
 
 
 def format_default_text(item: dict):
