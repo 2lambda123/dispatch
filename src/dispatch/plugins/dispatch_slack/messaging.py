@@ -9,13 +9,13 @@ from typing import Any, List, Optional
 
 from blockkit import (
     Actions,
-    Button,
+        Button,
     Context,
     Divider,
     MarkdownText,
     Section,
-    StaticSelect,
-    PlainOption,
+        StaticSelect,
+        PlainOption,
 )
 from slack_sdk.web.client import WebClient
 from slack_sdk.errors import SlackApiError
@@ -191,7 +191,7 @@ def format_default_text(item: dict):
         return item["text"]
 
 
-def default_notification(items: list):
+def default_notification(items: list):   # Update the 'default_notification' function to handle multiple grouped items and avoid adding blocks with no data
     """Creates blocks for a default notification."""
     blocks = [Divider()]
     for item in items:
