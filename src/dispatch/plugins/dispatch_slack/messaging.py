@@ -217,7 +217,7 @@ def default_notification(items: list):
         if isinstance(item, list):  # handle case where we are passing multiple grouped items
             blocks += default_notification(item)
 
-        if item.get("title_link") == "None":  # avoid adding blocks with no data
+        if item.get("title_link") is None or item.get("title_link") == "None":  # avoid adding blocks with no data
             continue
 
         if item.get("type"):
