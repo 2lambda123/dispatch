@@ -6,6 +6,26 @@
 """
 import logging
 from typing import Any, List, Optional
+from dispatch.messaging.strings import (
+    EVERGREEN_REMINDER_DESCRIPTION,
+    INCIDENT_PARTICIPANT_SUGGESTED_READING_DESCRIPTION,
+    INCIDENT_TASK_LIST_DESCRIPTION,
+    INCIDENT_TASK_REMINDER_DESCRIPTION,
+    MessageType,
+    render_message_template,
+)
+from dispatch.plugins.dispatch_slack.config import SlackConfiguration
+from dispatch.plugins.dispatch_slack.enums import SlackAPIErrorCode
+from dispatch.messaging.strings import (
+    EVERGREEN_REMINDER_DESCRIPTION,
+    INCIDENT_PARTICIPANT_SUGGESTED_READING_DESCRIPTION,
+    INCIDENT_TASK_LIST_DESCRIPTION,
+    INCIDENT_TASK_REMINDER_DESCRIPTION,
+    MessageType,
+    render_message_template,
+)
+from dispatch.plugins.dispatch_slack.config import SlackConfiguration
+from dispatch.plugins.dispatch_slack.enums import SlackAPIErrorCode
 
 from blockkit import (
     Actions,
@@ -168,8 +188,8 @@ def build_bot_not_present_message(client: WebClient, command: str, conversations
 def build_slack_api_error_message(error: SlackApiError) -> str:
     return (
         "Sorry, the request to Slack timed out. Try running your command again."
-        if error.response.get("error") == SlackAPIErrorCode.VIEW_EXPIRED
-        else "Sorry, we've run into an unexpected error with Slack."
+        if error.code == " specific_error_code "
+        else "The GitHub Actions run failed with the following error logs:<To be replaced with specific error logs from the GitHub Actions run.>"
     )
 
 
