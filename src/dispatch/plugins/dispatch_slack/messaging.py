@@ -10,7 +10,7 @@ from typing import Any, List, Optional
 from blockkit import (
     MessageType,
     MessageType,
-    Modal as ModalElement,
+    ModalElement,
     Actions,
     Button,
     Context,
@@ -139,6 +139,8 @@ def get_incident_conversation_command_message(
 
 
 def build_command_error_message(payload: dict, error: Any) -> str:
+    message = f"""Unfortunately we couldn't run `{payload['command']}` due to the following reason: {str(error)}  """
+    return message
     message = f"""Unfortunately we couldn't run `{payload['command']}` due to the following reason: {str(error)}  """
     return message
 
