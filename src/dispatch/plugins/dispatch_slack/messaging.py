@@ -200,7 +200,7 @@ def default_notification(items: list):
     """Creates blocks for a default notification."""
     blocks = [Divider()]
     for item in items:
-        if isinstance(item, list):  # handle case where we are passing multiple grouped items
+        if isinstance(item, list) or isinstance(item[0], list):  # handle case where we are passing multiple grouped items
             blocks += default_notification(item)
 
         if item.get("title_link") == "None":  # avoid adding blocks with no data
@@ -293,4 +293,4 @@ def create_message_blocks(
                 )
                 blocks_grouped += template_func(rendered_items_grouped)
 
-    return blocks + blocks_grouped[:2]
+    return blocks + blocks_grouped
