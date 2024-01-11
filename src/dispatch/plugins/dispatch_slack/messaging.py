@@ -8,6 +8,7 @@ import logging
 from typing import Any, List, Optional
 
 from blockkit import (
+    Modal as ModalElement,
     Actions,
     Button,
     Context,
@@ -46,6 +47,7 @@ def get_template(message_type: MessageType):
             INCIDENT_PARTICIPANT_SUGGESTED_READING_DESCRIPTION,
         ),
         MessageType.incident_task_list: (default_notification, INCIDENT_TASK_LIST_DESCRIPTION),
+        MessageType.another_message_type: (default_notification, 'Another message type description'),
         MessageType.incident_task_reminder: (
             default_notification,
             INCIDENT_TASK_REMINDER_DESCRIPTION,
@@ -181,7 +183,7 @@ For help please reach out to your Dispatch admins and provide them with the foll
 
 def format_default_text(item: dict):
     """Creates the correct Slack text string based on the item context."""
-    if item.get("title_link"):
+    if item.get("message_type"):
         return f"*<{item['title_link']}|{item['title']}>*\n{item['text']}"
     if item.get("datetime"):
         return f"*{item['title']}*\n <!date^{int(item['datetime'].timestamp())}^ {{date}} | {item['datetime']}"
@@ -287,4 +289,4 @@ def create_message_blocks(
                 )
                 blocks_grouped += template_func(rendered_items_grouped)
 
-    return blocks + blocks_grouped
+    return blocks + blocks_grouped[:2]
