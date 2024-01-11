@@ -8,6 +8,8 @@ import logging
 from typing import Any, List, Optional
 
 from blockkit import (
+    MessageType,
+    MessageType,
     Modal as ModalElement,
     Actions,
     Button,
