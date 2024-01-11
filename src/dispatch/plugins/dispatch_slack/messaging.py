@@ -8,7 +8,7 @@ import logging
 from typing import Any, List, Optional
 
 from blockkit import (
-    MessageType,
+    EVERGREEN_REMINDER_DESCRIPTION,
     MessageType,
     ModalElement,
     Actions,
@@ -140,12 +140,12 @@ def get_incident_conversation_command_message(
 
 def build_command_error_message(payload: dict, error: Any) -> str:
     message = f"""Unfortunately we couldn't run `{payload['command']}` due to the following reason: {str(error)}  """
-    return message
+    return f"I see you tried to run `{payload['command']}`. This is a sensitive command and cannot be run with the incident role you are currently assigned."
     message = f"""Unfortunately we couldn't run `{payload['command']}` due to the following reason: {str(error)}  """
     return message
 
 
-def build_role_error_message(payload: dict) -> str:
+def build_role_error_message(payload: dict, error: Any) -> str:
     message = f"""I see you tried to run `{payload['command']}`. This is a sensitive command and cannot be run with the incident role you are currently assigned."""
     return message
 
