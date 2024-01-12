@@ -125,12 +125,14 @@ def handle_list_signals_command(
     )
 
     signals = []
+    app.logger.info(f'Start: Retrieving signals from database')
     for project in projects:
         signals.extend(
             signal_service.get_all_by_conversation_target(
                 db_session=db_session, project_id=project.id, conversation_target=conversation_name
             )
         )
+    app.logger.info(f'End: Retrieved {len(signals)} signals from database')
 
     if not signals:
         modal = Modal(
