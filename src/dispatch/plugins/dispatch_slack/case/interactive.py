@@ -125,7 +125,7 @@ def handle_list_signals_command(
     )
 
     signals = []
-    app.logger.info(f'Start: Retrieving signals from database')
+    app.logger.info(f'Fetching signals from the current page {current_page} out of {total_pages} total pages from the database')
     for project in projects:
         signals.extend(
             signal_service.get_all_by_conversation_target(
