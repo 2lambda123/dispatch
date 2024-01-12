@@ -193,7 +193,7 @@ def format_default_text(item: dict):
 def default_notification(items: list):
     """Creates blocks for a default notification."""
     blocks = [Divider()]
-    for item in items:
+    for item in items[0]: 
         if isinstance(item, list):  # handle case where we are passing multiple grouped items
             blocks += default_notification(item)
 
@@ -269,7 +269,7 @@ def create_message_blocks(
     if description:  # include optional description text (based on message type)
         blocks.append(Section(text=description))
 
-    for item in items:
+    for item in items[0]: 
         if message_template:
             rendered_items = render_message_template(message_template, **item)
             blocks += template_func(rendered_items)
@@ -277,7 +277,7 @@ def create_message_blocks(
             blocks += template_func(**item)["blocks"]
 
     blocks_grouped = []
-    if items:
+    if items[0]: 
         if items[0].get("items_grouped"):
             for item in items[0]["items_grouped"]:
                 rendered_items_grouped = render_message_template(
