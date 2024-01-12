@@ -99,7 +99,7 @@ from dispatch.signal.models import (
 )
 
 
-def configure(config: SlackConversationConfiguration):
+def configure_signals(config: SlackConversationConfiguration):
     """Maps commands/events to their functions."""
     # don't need an incident context
     app.command(config.slack_command_list_signals, middleware=[db_middleware])(
@@ -125,6 +125,17 @@ def handle_list_signals_command(
     )
 
     signals = []
+    if not signals:
+        modal = Modal(
+            title="Signal Definition List",
+            blocks=[
+                Context(elements=[f"There are no signals configured for {conversation_name}"]),
+            ],
+            close="Close",
+        ).build()
+
+        return client.views_open(trigger_id=body["trigger_id"], view=modal)
+
     for project in projects:
         signals.extend(
             signal_service.get_all_by_conversation_target(
@@ -142,6 +153,31 @@ def handle_list_signals_command(
         ).build()
 
         return client.views_open(trigger_id=body["trigger_id"], view=modal)
+
+    limit = 25
+    current_page = 0
+    total_pages = len(signals) // limit + (1 if len(signals) % limit > 0 else 0)
+
+    _draw_list_signal_modal(
+        client=client,
+        body=body,
+        db_session=db_session,
+        conversation_name=conversation_name,
+        current_page=current_page,
+        total_pages=total_pages,
+        first_render=True
+    )
+
+    if not signals:
+        modal = Modal(
+            title="Signal Definition List",
+            blocks=[
+                Context(elements=[f"There are no signals configured for {conversation_name}"]),
+            ],
+            close="Close",
+        ).build()
+
+        return client.views_open(trigger_id=body.get("trigger_id"), view=modal)
 
     limit = 25
     current_page = 0
@@ -188,7 +224,8 @@ def _draw_list_signal_modal(
         client = WebClient(token=<SLACK_APP_TOKEN>)
         body = {
             "trigger_id": "836215173894.4768581721.6f8ab1fcee0478f0e6c0c2b0dc9f0c7a",
-        }
+            return blocks + pagination_blocks if len(signals) > limit else blocks
+}
         db_session = Session()
         conversation_name = "test_conversation"
         current_page = 0
@@ -341,14 +378,14 @@ def handle_next_action(ack: Ack, body: dict, client: WebClient, db_session: Sess
     if current_page < total_pages - 1:
         current_page += 1
 
-    _draw_list_signal_modal(
+    return _draw_list_signal_modal(
         client=client,
         body=body,
         db_session=db_session,
         conversation_name=conversation_name,
         current_page=current_page,
         total_pages=total_pages,
-        first_render=False,
+        first_render=False
     )
 
 
