@@ -199,7 +199,6 @@ def default_notification(items: list):
 
         if item.get("title_link") == "None":  # avoid adding blocks with no data
             continue
-
         if item.get("type"):
             if item["type"] == "context":
                 blocks.append(Context(elements=[MarkdownText(text=format_default_text(item))]))
