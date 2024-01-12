@@ -228,7 +228,6 @@ def default_notification(items: list):
 
                     elements.append(element)
             blocks.append(Actions(elements=elements))
-
         if select := item.get("select"):
             options = []
             for option in select["options"]:
