@@ -19,7 +19,7 @@ from dispatch.plugins import dispatch_slack as slack_plugin
 from dispatch.plugins.bases import ContactPlugin, ConversationPlugin
 from dispatch.plugins.dispatch_slack.config import (
     SlackContactConfiguration,
-    SlackConversationConfiguration,
+    SlackConversationConfiguration, SlackPlugin,
 )
 from dispatch.signal.enums import SignalEngagementStatus
 from dispatch.signal.models import SignalEngagement, SignalInstance
@@ -314,7 +314,7 @@ class SlackContactPlugin(ContactPlugin):
     author_url = "https://github.com/netflix/dispatch.git"
 
     def __init__(self):
-        self.configuration_schema = SlackContactConfiguration
+        self.configuration_schema = SlackContactConfiguration, SlackPlugin
 
     def get(self, email: str, **kwargs):
         """Fetch user info by email."""
