@@ -17,6 +17,7 @@ def cli():
 
 
 def run_command(command: str) -> str:
+    print(f'Running command: {command}')
     """Utility function to run commands."""
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output, _ = process.communicate()
