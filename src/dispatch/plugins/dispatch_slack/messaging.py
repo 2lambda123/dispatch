@@ -35,6 +35,7 @@ log = logging.getLogger(__name__)
 
 
 def get_template(message_type: MessageType):
+    log.info(f'Message Type: {message_type}')
     """Fetches the correct template based on message type."""
     template_map = {
         MessageType.evergreen_reminder: (
