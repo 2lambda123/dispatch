@@ -87,9 +87,9 @@ def update_section(
 def release_notes(pull_request_number: int) -> NoReturn:
     """Utility function to assist with generating release notes."""
     dispatch_pr_url = "https://github.com/Netflix/dispatch/pull/"
-    exclude_bot_authors = True
-    exclude_labels = ["skip-changelog", "UI/UX", "javascript"]
-    gh_pr_list_merged_command = 'gh pr list -s merged --json "title,author,number,labels" -L 250'
+    exclude_bot_authors = False
+    exclude_labels = ["skip-changelog", "UI/UX"]
+    gh_pr_list_merged_command = 'gh pr list -s merged --json "title,author,number,labels" -L 250 2>&1'
     sections = {
         "bug": "",
         "dependencies": "",
@@ -101,7 +101,11 @@ def release_notes(pull_request_number: int) -> NoReturn:
     }
 
     click.echo(f"Fetching list of merged PRs since #{pull_request_number}...")
-    pull_requests = json.loads(run_command(gh_pr_list_merged_command))
+    try:
+        pull_requests = json.loads(run_command(gh_pr_list_merged_command))
+    except Exception as e:
+        click.echo(f"Error fetching list of merged PRs: {e}")
+        pull_requests = []
 
     if not pull_requests:
         click.echo(f"No PRs merged since #{pull_request_number}.")
