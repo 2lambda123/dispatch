@@ -200,39 +200,14 @@ def _draw_list_signal_modal(
             client, body, db_session, conversation_name, current_page, total_pages, first_render
         )
     """
-    modal = Modal(
-        title="Signal Definition List",
-        blocks=_build_signal_list_modal_blocks(
-            db_session=db_session,
-            conversation_name=conversation_name,
-            current_page=current_page,
-            total_pages=total_pages,
-        ),
-        close="Close",
-        private_metadata=json.dumps(
-            {
-                "conversation_name": conversation_name,
-                "current_page": current_page,
-                "total_pages": total_pages,
-            }
-        ),
-    ).build()
-
-    client.views_open(
-        trigger_id=body["trigger_id"], view=modal
-    ) if first_render is True else client.views_update(view_id=body["view"]["id"], view=modal)
-
-
-def _build_signal_list_modal_blocks(
-    db_session: Session,
-    conversation_name: str,
-    current_page: int,
-    total_pages: int,
-) -> list:
-    """Builds a list of blocks for a modal view displaying signals.
-
-    This function creates a list of blocks that represent signals that are filtered by conversation_name. The list of signals
-    is paginated and limited to 25 signals per page.
+    app.logger.info(f'Start: Retrieving signals from database')
+    for project in projects:
+        signals.extend(
+            signal_service.get_all_by_conversation_target(
+                db_session=db_session, project_id=project.id, conversation_target=conversation_name
+            )
+        )
+    app.logger.info(f'End: Retrieved {len(signals)} signals from database')
 
     The function returns the blocks with pagination controls that display the current page and allows navigation to the previous
     and next pages.
