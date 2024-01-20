@@ -5,7 +5,7 @@
     :license: Apache, see LICENSE for more details.
 """
 import logging
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Dict
 
 from blockkit import (
     Actions,
@@ -167,7 +167,7 @@ def build_bot_not_present_message(client: WebClient, command: str, conversations
 
 def build_slack_api_error_message(error: SlackApiError) -> str:
     return (
-        "Sorry, the request to Slack timed out. Try running your command again."
+        "The request to Slack timed out. Please try running your command again."
         if error.response.get("error") == SlackAPIErrorCode.VIEW_EXPIRED
         else "Sorry, we've run into an unexpected error with Slack."
     )
@@ -198,7 +198,7 @@ def default_notification(items: list):   # Update the 'default_notification' fun
         if isinstance(item, list):  # handle case where we are passing multiple grouped items
             blocks += default_notification(item)
 
-        if item.get("title_link") == "None":  # avoid adding blocks with no data
+        if item.get("title_link") is None:  # avoid adding blocks with no data
             continue
 
         if item.get("type"):
