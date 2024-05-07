@@ -15,7 +15,7 @@ default_language_version:
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.4.2
+    rev: v0.4.3
     hooks:
       # Run the linter.
       #
@@ -28,7 +28,7 @@ repos:
 
   # Typos
   - repo: https://github.com/crate-ci/typos
-    rev: v1.20.10
+    rev: v1.21.0
     hooks:
       - id: typos
 
