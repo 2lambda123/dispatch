@@ -98,7 +98,7 @@ traitlets==5.9.0
     # via
     #   ipython
     #   matplotlib-inline
-virtualenv==20.24.3
+virtualenv==20.28.1
     # via pre-commit
 vulture==2.11
     # via -r requirements-dev.in
