@@ -30,7 +30,7 @@ executing==1.2.0
     # via
     #   devtools
     #   stack-data
-factory-boy==3.3.0
+factory-boy==3.3.1
     # via -r requirements-dev.in
 faker==26.0.0
     # via
